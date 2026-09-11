@@ -22,8 +22,9 @@ namespace EmployeeManagementAPI.Service
 
 
         //ADD EMPLOYEE
-        public async Task AddEmployeeAsync(Employee employee)
+        public async Task AddEmployeeAsync(CreateEmployeeDto dto)
         {
+            var employee = _mapper.Map<Employee>(dto);
             await _context.EmployeesDB.AddAsync(employee);
             await _context.SaveChangesAsync();
 
@@ -68,6 +69,7 @@ namespace EmployeeManagementAPI.Service
         public async Task<Employee> GetEmployeeByIdAsync(int id)
         {
             return await _context.EmployeesDB.FirstAsync(e => e.ID == id);
+            
         }
 
 

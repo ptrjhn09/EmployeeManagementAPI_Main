@@ -6,10 +6,12 @@ namespace EmployeeManagementAPI.Mapping
 {
     public class ProfileMapping : Profile
     {
-        public ProfileMapping() 
+        public ProfileMapping()
         {
             CreateMap<Employee, Employeedto>();
             CreateMap<UpdateEmployeeDto, Employee>();
+            CreateMap<RegisterUserDto, User>();
+            CreateMap<CreateEmployeeDto, Employee>();
         }
     }
 }

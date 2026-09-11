@@ -3,7 +3,9 @@ using EmployeeManagementAPI.Interface;
 using EmployeeManagementAPI.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using EmployeeManagementAPI.DTO;
 namespace EmployeeManagementAPI.Controllers
 {
     //THIS MEANS THIS IS A CONTROLER AND IT WILL HANDLE HTTP REQEUSTS
@@ -12,10 +14,12 @@ namespace EmployeeManagementAPI.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _service;
+        private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeService service)
+        public EmployeeController(IEmployeeService service, IMapper mapper)
         {
-            _service = service;         
+            _service = service;
+            _mapper = mapper;
         }
 
 
@@ -70,10 +74,11 @@ namespace EmployeeManagementAPI.Controllers
         //ADD NEW EMPLOYEE
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> AddEmployeeAsync(Employee emp)
+        public async Task<IActionResult> AddEmployeeAsync(CreateEmployeeDto dto)
         {
-            await _service.AddEmployeeAsync(emp);
-            return Ok(emp); //RETURN 200 OK WITH EMPLOYEE
+           
+    await _service.AddEmployeeAsync(dto);
+            return Ok(); //RETURN 200 OK WITH EMPLOYEE
         }
 
 
@@ -82,13 +87,14 @@ namespace EmployeeManagementAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEmployeeAsync(int id, UpdateEmployeeDto dto)
         {
-            dto.EmployeeID = id.ToString();
-            var updated = await _service.UpdateEmployeeAsync(id, dto);
-            if (!updated)
-            {
-                return NotFound(); //RETURN 404 NOT FOUND
-            }
-            return Ok(dto); //RETURN 200 OK WITH EMPLOYEE
+            var result = await _service.UpdateEmployeeAsync(id, dto);
+                
+                if (!result)
+                {
+                    return NotFound("Employee not found.");
+                }
+                return Ok("Employee updated successfully.");
+            
         }
 
 

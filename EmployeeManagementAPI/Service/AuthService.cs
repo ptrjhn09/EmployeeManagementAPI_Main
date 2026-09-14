@@ -6,16 +6,19 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using AutoMapper;
 using System.Text;
 namespace EmployeeManagementAPI.Service
 {
     public class AuthService : IAuthService
     {
         private readonly ApplicationDBContext _context;
+        private readonly IMapper _mapper;
 
-        public AuthService(ApplicationDBContext context)
+        public AuthService(ApplicationDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<string> LogInMethod (LoginRequest request)
@@ -61,17 +64,12 @@ namespace EmployeeManagementAPI.Service
 
         public async Task<string> Register(RegisterUserDto dto)
         {
-            var user = new User
-
-            {
-                Username = dto.Username,
-                Password = dto.Password,
-                Role = dto.Role,
-
-            };
+            var user = _mapper.Map<User>(dto);
+            
             _context.UserDB.Add(user);
             await _context.SaveChangesAsync();
             return "User Registered Successfully";
+
         }
     }
 }

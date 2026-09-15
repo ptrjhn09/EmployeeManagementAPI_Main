@@ -23,17 +23,14 @@ namespace EmployeeManagementAPI.Controllers
         }
 
 
-        //RETURN ALL EMPLOYEES
-
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, admin")]
         [HttpGet("GetAllEmployees")]
         public async Task<IActionResult> GetEmployees()  
         { 
             var emp = await _service.GetAllEmployeesAsync();
-            return Ok(emp); //RETURN 200 OK WITH EMPLOYEES
+            return Ok(emp); 
         }
 
-        //For Testin Only
         [Authorize]
         [HttpGet("Testing")]
         public IActionResult Test()
@@ -41,7 +38,6 @@ namespace EmployeeManagementAPI.Controllers
             return Ok("Ok Success");
         }
 
-        //RETURN EMPLOYEE BY ID
         [Authorize]
         [HttpGet ("{id}")]
         public async Task<IActionResult> GetEmployeeByIdAsync(int id)
@@ -50,12 +46,10 @@ namespace EmployeeManagementAPI.Controllers
 
             if(emp == null)
             {
-                return NotFound(); //RETURN 404 NOT FOUND
+                return NotFound(); 
             }
             return Ok(emp);
         }
-
-        //RETURN EMPLOYEE BY ID USING DTO
 
         [Authorize]
         [HttpGet("GetEmployeeByIdUsingDTO/{id}")]
@@ -65,24 +59,22 @@ namespace EmployeeManagementAPI.Controllers
 
             if(emp == null)
             {
-                return NotFound(); //RETURN 404 NOT FOUND
+                return NotFound(); 
             }
             return Ok(emp);
         }
 
 
-        //ADD NEW EMPLOYEE
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddEmployeeAsync(CreateEmployeeDto dto)
         {
            
     await _service.AddEmployeeAsync(dto);
-            return Ok(); //RETURN 200 OK WITH EMPLOYEE
+            return Ok(); 
         }
 
 
-        //UPDATE EMPLOYEE
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEmployeeAsync(int id, UpdateEmployeeDto dto)
@@ -96,18 +88,13 @@ namespace EmployeeManagementAPI.Controllers
                 return Ok("Employee updated successfully.");
             
         }
-
-
-
-        //DELETE EMPLOYEE
-
-      
+   
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployeeAsync(int id)
         {
             
             await _service.DeleteEmployeeAsync(id);
-            return Ok(); //RETURN 200 OK WITH EMPLOYEE);
+            return Ok(); 
         }
     }
 }

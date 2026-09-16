@@ -38,7 +38,7 @@ namespace EmployeeManagementAPI.Controllers
             return Ok("Ok Success");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, admin")]
         [HttpGet ("{id}")]
         public async Task<IActionResult> GetEmployeeByIdAsync(int id)
         {
@@ -65,7 +65,7 @@ namespace EmployeeManagementAPI.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(Roles = "Admin, admin")]
         [HttpPost]
         public async Task<IActionResult> AddEmployeeAsync(CreateEmployeeDto dto)
         {
@@ -75,7 +75,7 @@ namespace EmployeeManagementAPI.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(Roles = "Admin, admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEmployeeAsync(int id, UpdateEmployeeDto dto)
         {
@@ -88,7 +88,8 @@ namespace EmployeeManagementAPI.Controllers
                 return Ok("Employee updated successfully.");
             
         }
-   
+
+        [Authorize(Roles = "Admin, admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployeeAsync(int id)
         {

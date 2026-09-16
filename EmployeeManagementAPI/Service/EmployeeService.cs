@@ -20,8 +20,6 @@ namespace EmployeeManagementAPI.Service
             _mapper = mapper;
         }
 
-
-        //ADD EMPLOYEE
         public async Task AddEmployeeAsync(CreateEmployeeDto dto)
         {
             var employee = _mapper.Map<Employee>(dto);
@@ -30,8 +28,6 @@ namespace EmployeeManagementAPI.Service
 
         }
 
-
-        //DELETE EMPLOYEE
 
         public async Task DeleteEmployeeAsync(int id)
         {
@@ -43,15 +39,12 @@ namespace EmployeeManagementAPI.Service
             }
         }
 
-
-        //GET ALL EMPLOYEES
         public async Task<List<Employee>> GetAllEmployeesAsync()
         {
             var allEmp = await _context.EmployeesDB.ToListAsync();
             return allEmp;
 
         }
-        //GET EMPLOYEE BY ID USING DTO
         public async Task<Employeedto> GetEmployeeByIdAsyncdto(int id)
         {
             var emp = await _context.EmployeesDB.FindAsync(id);
@@ -62,18 +55,11 @@ namespace EmployeeManagementAPI.Service
 
         }
 
-
-
-
-        //GET EMPLOYEE BY ID
         public async Task<Employee> GetEmployeeByIdAsync(int id)
         {
             return await _context.EmployeesDB.FirstAsync(e => e.ID == id);
             
         }
-
-
-        //UPDATE EMPLOYEE
 
         public async Task<bool> UpdateEmployeeAsync(int id, UpdateEmployeeDto dto)
         {

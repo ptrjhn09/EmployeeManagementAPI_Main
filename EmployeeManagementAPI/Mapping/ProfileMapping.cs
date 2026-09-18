@@ -8,6 +8,7 @@ namespace EmployeeManagementAPI.Mapping
     {
         public ProfileMapping()
         {
+            //tells AutoMapper to convert one object into >> another object
             CreateMap<Employee, Employeedto>();
             CreateMap<UpdateEmployeeDto, Employee>();
             CreateMap<RegisterUserDto, User>();

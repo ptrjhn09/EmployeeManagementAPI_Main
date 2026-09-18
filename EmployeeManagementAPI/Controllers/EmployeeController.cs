@@ -8,7 +8,7 @@ namespace EmployeeManagementAPI.Controllers
 {
     //THIS MEANS THIS IS A CONTROLER AND IT WILL HANDLE HTTP REQEUSTS
     [ApiController]
-    [Route("apiKo/[controller]")]
+    [Route("api/employees")]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _service;
@@ -24,11 +24,15 @@ namespace EmployeeManagementAPI.Controllers
 
 
         [Authorize(Roles = "Admin, admin")]
-        [HttpGet("GetAllEmployees")]
+        [HttpGet]
         public async Task<IActionResult> GetEmployees()  
         {
-            _logging.LogInformation("The User Get All Employee");
+            
             var emp = await _service.GetAllEmployeesAsync();
+            if (emp == null)
+            {
+                return NoContent();
+            }
             return Ok(emp); 
         }
 
@@ -40,25 +44,11 @@ namespace EmployeeManagementAPI.Controllers
             return Ok("Ok Success");
         }
 
-        [Authorize(Roles = "Admin, admin")]
-        [HttpGet ("{id}")]
-        public async Task<IActionResult> GetEmployeeByIdAsync(int id)
-        {
-            _logging.LogInformation($"The User with ID {id} retrieve succefuly");
-            var emp = await _service.GetEmployeeByIdAsync(id);
-
-            if(emp == null)
-            {
-                return NotFound(); 
-            }
-            return Ok(emp);
-        }
 
         [Authorize]
-        [HttpGet("GetEmployeeByIdUsingDTO/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployeeByIdAsyncdto(int id)
         {
-            _logging.LogInformation($"The User with ID {id} retrieve the necessary Data succefuly");
             var emp = await _service.GetEmployeeByIdAsyncdto(id);
 
             if(emp == null)

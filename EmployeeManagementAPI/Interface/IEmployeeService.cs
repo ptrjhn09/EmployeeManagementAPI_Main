@@ -8,7 +8,6 @@ namespace EmployeeManagementAPI.Interface
     public interface IEmployeeService
     {
         Task<List<Employee>> GetAllEmployeesAsync();
-        Task<Employee> GetEmployeeByIdAsync(int id);
         Task AddEmployeeAsync(CreateEmployeeDto dto);
         Task<bool> UpdateEmployeeAsync(int id, UpdateEmployeeDto dto);
         Task DeleteEmployeeAsync(int id);

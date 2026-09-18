@@ -55,11 +55,6 @@ namespace EmployeeManagementAPI.Service
 
         }
 
-        public async Task<Employee> GetEmployeeByIdAsync(int id)
-        {
-            return await _context.EmployeesDB.FirstAsync(e => e.ID == id);
-            
-        }
 
         public async Task<bool> UpdateEmployeeAsync(int id, UpdateEmployeeDto dto)
         {
